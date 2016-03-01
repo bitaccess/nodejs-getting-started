@@ -67,7 +67,13 @@ module.exports = function (model) {
   router.post('/add', function insert(req, res, next) {
     var data = req.body;
 
-    // Save the data to the database.
+    // Hack in a list of objects
+    data.a_list_of_objects = [
+      { a_date: new Date(), a_string: 'A String', a_boolean: true, a_number: 5 },
+      { a_date: new Date(), a_string: 'Another String', a_boolean: false, a_number: 6 },
+      { a_date: new Date(), a_string: 'Yet Another String', a_boolean: true, a_number: 7 },
+      { a_date: new Date(), a_string: 'And Yet Another String', a_boolean: false, a_number: 8 },
+    ];
     model.create(data, function (err, savedData) {
       if (err) { return next(err); }
       res.redirect(req.baseUrl + '/' + savedData.id);
